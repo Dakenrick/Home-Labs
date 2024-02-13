@@ -1,0 +1,32 @@
+spanning-tree mode rapid-pvst
+hostname
+no ip domain-lookup
+ip domain-name CCNP
+crypto key generate rsa modulus 2048
+username admin priviledge 15 secret Admin123
+vrf definition Mgmt-intf
+address-family ipv4
+exit-address-family
+address-family ipv6
+exit-address-family
+int gi 0/0
+description Management-Intf-Lab-100
+ip address x.x.x.x x.x.x.x
+no switport
+no shut
+line vty 0 4
+transport input ssh
+login local
+ip ssh ver 2
+ip ssh server algorithm encryption aes192-ctr
+ip ssh server algorithm encryption aes256-ctr
+ip ssh server algorithm mac hmac-sha1-96
+
+Unable to negotiate with 192.168.100.20 port 22: no matching key exchange method found. Their offer: diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+
+vim.tiny /etc/ssh/ssh_config
+Host *
+    KexAlgorithms diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    HostkeyAlgorithms +ssh-rsa
+    MACs hmac-sha1-96

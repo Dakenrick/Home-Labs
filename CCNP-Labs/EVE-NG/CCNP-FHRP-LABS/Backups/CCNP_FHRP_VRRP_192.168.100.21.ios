@@ -1,0 +1,175 @@
+Building configuration...
+
+Current configuration : 4031 bytes
+!
+! Last configuration change at 20:19:11 UTC Sat Jan 20 2024 by cisco
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname ccnp-fhrp-core-02
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition MGMT
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+!
+username cisco privilege 15 secret 5 $1$Gly2$LcPWWdWZWPsJ4yFlMYPcw0
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip domain-name CCNP
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description Test-Network-01
+ ip address 172.16.1.2 255.255.255.255
+!
+interface Loopback1
+ description Test-Network-02
+ ip address 172.16.2.2 255.255.255.255
+!
+interface Loopback2
+ description Test-Network-03
+ ip address 172.16.3.2 255.255.255.255
+!
+interface Loopback10
+ description Router-Id
+ ip address 2.2.2.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description Management-Intf-Lab-100
+ no switchport
+ vrf forwarding MGMT
+ ip address 192.168.100.21 255.255.255.0
+ negotiation auto
+ no cdp enable
+!
+interface GigabitEthernet0/1
+ description Link-to-Distro-01
+ no switchport
+ ip address 172.17.1.13 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ description Link-to-Distro-02
+ no switchport
+ ip address 172.17.1.9 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ description Link-to-Core-01
+ no switchport
+ ip address 172.18.1.2 255.255.255.252
+ negotiation auto
+!
+router ospf 100
+ router-id 2.2.2.2
+ network 172.16.0.0 0.0.3.255 area 0
+ network 172.17.1.8 0.0.0.7 area 1
+ network 172.18.1.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+ip http server
+ip http secure-server
+!
+ip ssh version 2
+ip ssh server algorithm mac hmac-sha1-96
+ip ssh server algorithm encryption aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^CC
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+banner incoming ^CC
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+banner login ^CC
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ exec-timeout 30 0
+ login local
+ transport input ssh
+!
+!
+end
