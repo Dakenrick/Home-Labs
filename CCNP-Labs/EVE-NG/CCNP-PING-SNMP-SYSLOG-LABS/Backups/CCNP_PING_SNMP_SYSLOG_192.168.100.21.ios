@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 3881 bytes
+Current configuration : 4062 bytes
 !
-! Last configuration change at 03:53:47 UTC Thu Feb 22 2024 by cisco
+! Last configuration change at 04:57:18 UTC Thu Feb 22 2024 by cisco
 !
 version 15.2
 service timestamps debug datetime msec
@@ -126,7 +126,12 @@ access-list 10 deny   any log
 !
 snmp-server community MONITORS RO 10
 snmp-server community MANAGERS RW 10
+snmp-server enable traps eigrp
+snmp-server enable traps ospf state-change
+snmp-server enable traps ospf errors
+snmp-server enable traps bgp state-changes
 snmp-server host 10.0.10.254 informs version 2c MANAGERS 
+snmp ifmib ifindex persist
 !
 control-plane
 !
