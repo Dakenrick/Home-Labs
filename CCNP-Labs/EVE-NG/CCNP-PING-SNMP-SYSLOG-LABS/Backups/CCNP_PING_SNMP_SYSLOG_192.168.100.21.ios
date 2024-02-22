@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 3666 bytes
+Current configuration : 3881 bytes
 !
-! Last configuration change at 06:01:42 UTC Tue Feb 13 2024 by cisco
+! Last configuration change at 03:53:47 UTC Thu Feb 22 2024 by cisco
 !
 version 15.2
 service timestamps debug datetime msec
@@ -119,9 +119,14 @@ ip ssh server algorithm encryption aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !
 !
+access-list 10 permit 10.0.10.0 0.0.0.255 log VLAN10
+access-list 10 deny   any log
 !
 !
 !
+snmp-server community MONITORS RO 10
+snmp-server community MANAGERS RW 10
+snmp-server host 10.0.10.254 informs version 2c MANAGERS 
 !
 control-plane
 !
