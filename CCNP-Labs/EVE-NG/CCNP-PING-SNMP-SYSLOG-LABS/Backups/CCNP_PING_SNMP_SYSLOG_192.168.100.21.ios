@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4062 bytes
+Current configuration : 4150 bytes
 !
-! Last configuration change at 04:57:18 UTC Thu Feb 22 2024 by cisco
+! Last configuration change at 00:45:43 UTC Sun Feb 25 2024 by cisco
 !
 version 15.2
 service timestamps debug datetime msec
@@ -24,6 +24,7 @@ vrf definition Mgmt-intf
  address-family ipv6
  exit-address-family
 !
+no logging console
 !
 username cisco privilege 15 secret 5 $1$4ZdC$GYXEz8UnuwLmeoLMvA95M1
 no aaa new-model
@@ -119,6 +120,8 @@ ip ssh server algorithm encryption aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !
 !
+logging trap debugging
+logging host 10.0.10.254
 access-list 10 permit 10.0.10.0 0.0.0.255 log VLAN10
 access-list 10 deny   any log
 !
@@ -166,6 +169,7 @@ By using the software, you agree to abide by the terms and conditions of the Cis
 line con 0
 line aux 0
 line vty 0 4
+ logging synchronous
  login local
  transport input ssh
 !
