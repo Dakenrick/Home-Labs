@@ -1,13 +1,14 @@
 system
- host-name               EAST-VB-01
- system-ip               100.0.0.1
- site-id                 1100001
+ host-name             EAST-VS-01
+ system-ip             100.0.0.2
+ site-id               1100001
+ controller-group-id   1
  admin-tech-on-failure
- no route-consistency-check
  no vrrp-advt-with-phymac
- organization-name       DSA
- upgrade-confirm         15
- vbond 173.16.30.10 local
+ sp-organization-name  DSA
+ organization-name     DSA
+ upgrade-confirm       15
+ vbond vb.dsa.local
  aaa
   auth-order      local radius tacacs
   usergroup basic
@@ -26,10 +27,10 @@ system
   usergroup tenantadmin
   !
   user admin
-   password $6$5126d8d0acf0094f$6UQDh545hsm4sx37zmCUH.g3goV8r2OHSQdA1i4zyWWI/o9dC9NtG0poe813cYFoGAqkc4orXV2K./u6lThlz/
+   password $6$e15688eebc4b44ce$ivAY772UFYreM6qY8seTlXI10fID9gi2m1rDn/bOSBhdcZthqRCLnE6XaXr7mAQfxF6BoeZc2DFKIx0JohCuC1
   !
   user cisco
-   password $6$37ec8377ab4f2d98$rWzLsAywjbqEZP7MrCo9y9yWgQX3IUwTH6kqUVfzz.iJVSwwOYF82ygxqOSP8MgJPnJuEeZacqxADY6sFEeCY1
+   password $6$d8564ae0a70247eb$2l9Xi1xJcUc2t9VS/yq9Qem83IizUfb4Zupc1Pmz5X.0BY5Dp1wsQx/g7y1EwW/UfDXkoQi4lKdB6qbCdfiz9/
    group    netadmin
   !
   ciscotacro-user true
@@ -46,7 +47,7 @@ system
    stratum 5
   exit
   server 192.168.100.20
-   source-interface eth0
+   source-interface eth1
    vpn              512
    version          4
   exit
@@ -54,47 +55,39 @@ system
 !
 omp
  no shutdown
+ filter-route
+  no outbound affinity-group-preference
+  no outbound tloc-color
+ exit
  graceful-restart
- advertise connected
- advertise static
-!
-security
- ipsec
-  integrity-type ip-udp-esp esp
- !
+ outbound-policy-caching
 !
 vpn 0
  dns 4.2.2.2 secondary
  dns 8.8.8.8 primary
- host vb.dsa.local ip 210.16.30.1
- interface ge0/0
-  description Tranport-Uplink-VPN-0
-  ip address 173.16.30.10/29
+ host vb.dsa.local ip 173.16.30.10 210.16.30.1
+ interface eth0
+  ip address 173.16.30.34/27
   ipv6 dhcp-client
   tunnel-interface
-   encapsulation ipsec
+   color private1
    allow-service all
-   no allow-service bgp
    allow-service dhcp
    allow-service dns
    allow-service icmp
    no allow-service sshd
    no allow-service netconf
    no allow-service ntp
-   no allow-service ospf
    no allow-service stun
-   allow-service https
   !
   no shutdown
  !
- ip route 0.0.0.0/0 173.16.30.9
+ ip route 0.0.0.0/0 173.16.30.33
 !
 vpn 512
- interface eth0
-  ip address 192.168.100.24/24
-  ipv6 dhcp-client
+ interface eth1
+  ip address 192.168.100.25/24
   icmp-redirect-disable
   no shutdown
  !
 !
-EAST-VB-01# 
