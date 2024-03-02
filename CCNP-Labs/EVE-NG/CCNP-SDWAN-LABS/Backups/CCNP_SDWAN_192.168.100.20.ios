@@ -1,0 +1,204 @@
+Building configuration...
+
+  
+  
+Current configuration : 5887 bytes
+!
+! Last configuration change at 06:02:57 UTC Sat Mar 2 2024 by cisco
+! NVRAM config last updated at 04:11:16 UTC Sat Mar 2 2024
+!
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CA-Server
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name mylab.com
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+crypto pki server CA
+ database level names
+ no database archive
+ issuer-name cn=sdwan.mylab.com,O=Mylab,OU=IT
+ lifetime certificate 3500
+ lifetime ca-certificate 7000
+ shutdown
+ database url flash:/pki/
+!
+crypto pki trustpoint CA
+ revocation-check crl
+ rsakeypair CA
+!
+!
+crypto pki certificate chain CA
+ certificate ca 01
+  3082034C 30820234 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  37310B30 09060355 040B1302 4954310E 300C0603 55040A13 054D796C 61623118 
+  30160603 55040313 0F736477 616E2E6D 796C6162 2E636F6D 301E170D 32343033 
+  30323033 34323330 5A170D34 33303530 32303334 3233305A 3037310B 30090603 
+  55040B13 02495431 0E300C06 0355040A 13054D79 6C616231 18301606 03550403 
+  130F7364 77616E2E 6D796C61 622E636F 6D308201 22300D06 092A8648 86F70D01 
+  01010500 0382010F 00308201 0A028201 01009317 2EBFA279 34E1B817 91E0A6EF 
+  59D46AB4 71D2EE5E A32C9FD6 0FC8A2A5 4C2C650F E0E2C5D4 C354CD8F 238834C2 
+  C1BAF453 34E7914D CA57DB7A E7BEDB57 727FE03A 9556059E 3F6E6110 CC095592 
+  C4055299 60198116 A4A72025 C2CB69E4 A33E5E5D E7F49EA6 82DEC4E2 C79784F0 
+  745FE122 0BB4902E 1E4115BD 5782F59A E9E27CE6 88DDB08C 876D14E2 7B688655 
+  63A1FDE2 8271BCF6 6A7ABDCE CDFB1023 EA61AF4B 10E9BE81 4F1D2B5D D68BB3B5 
+  4F0E1274 2B635BA0 3A971AA0 A0FF3A86 2970A11A 76FF7FCD 1DBCA6C0 63C5297B 
+  7314C4CE 5D04489B 4BAD87C6 CCE82D0E F4BBA797 983A17A1 A331500A 616D3547 
+  35E73420 2767E761 F6B0F24C 0A089309 00BD0203 010001A3 63306130 0F060355 
+  1D130101 FF040530 030101FF 300E0603 551D0F01 01FF0404 03020186 301F0603 
+  551D2304 18301680 14421601 855DE059 DD7D9545 2F738DD6 CB69E808 14301D06 
+  03551D0E 04160414 42160185 5DE059DD 7D95452F 738DD6CB 69E80814 300D0609 
+  2A864886 F70D0101 04050003 82010100 6579BCDB D34C2013 5131CC94 503C5A2B 
+  55AC7DB3 9C13F473 B2BD301A 15BBDD11 BF58C51A 3B8C75B3 F9153BBE F5253FBF 
+  F79CAFA4 5EF4A7CD C23F3043 48A8C4E6 1FAF10CB 5CDCE625 44E038F8 96BFB8AC 
+  B3CF4BB2 B49F7863 35086A14 E3AC5282 809347FD F3FAB681 7B2AB6B4 A5854576 
+  3F5EFBE4 AD6351D2 45D98B2A 8AA8D01D 23A038D0 EBD86EF8 484360FD C29BAC62 
+  B22D39DE 8A506FC1 82D50446 1BA6BB18 C8CCE82B 63EF50A3 52B9DC57 CE4D9E71 
+  30B1130D BEBB211F C43CC6B6 37904C12 DCCDA05D 55D55B92 24C5D264 5136C33A 
+  FDBF77E4 290F1713 3F8643C3 50276E17 7E25F0DA 59D1AC78 98A66D5F 69CD3861 
+  F37D7381 3454B963 C8A8FD91 8F80FB2F
+  	quit
+username cisco privilege 15 secret 9 $9$LNBt9xzu0xe8sf$8B5QtJeicsA7MatBdLqCxVD18YCWgmmTOeIRFIuo9ko
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ description Management-Intf-Lab-100
+ vrf forwarding Mgmt-intf
+ ip address 192.168.100.20 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+ip forward-protocol nd
+!
+!
+ip http server
+no ip http secure-server
+ip http secure-active-session-modules none
+ip http session-module-list RA SCEP
+ip http active-session-modules RA
+ip ssh version 2
+ip ssh server algorithm mac hmac-sha1-96
+ip ssh server algorithm encryption aes256-ctr
+!
+ipv6 ioam timestamp
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+!
+no scheduler allocate
+ntp master 1
+!
+end
