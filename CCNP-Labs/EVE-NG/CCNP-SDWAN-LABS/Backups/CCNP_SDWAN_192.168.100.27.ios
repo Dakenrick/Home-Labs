@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4168 bytes
+Current configuration : 4994 bytes
 !
-! Last configuration change at 19:18:23 UTC Sat Mar 2 2024 by cisco
+! Last configuration change at 20:25:45 UTC Sat Mar 2 2024 by cisco
 !
 version 15.2
 service timestamps debug datetime msec
@@ -82,7 +82,25 @@ interface GigabitEthernet0/2
  negotiation auto
 !
 interface GigabitEthernet0/3
+ description Internet-GI0/0
+ no switchport
+ no ip address
  negotiation auto
+!
+interface GigabitEthernet0/3.100
+ encapsulation dot1Q 100
+ ip address 210.16.30.1 255.255.255.252
+ ip nat outside
+!
+interface GigabitEthernet0/3.101
+ encapsulation dot1Q 101
+ ip address 210.16.30.5 255.255.255.252
+ ip nat outside
+!
+interface GigabitEthernet0/3.102
+ encapsulation dot1Q 102
+ ip address 210.16.30.13 255.255.255.252
+ ip nat outside
 !
 interface GigabitEthernet1/0
  description PE-RTR-GI0/1
@@ -106,10 +124,12 @@ interface GigabitEthernet1/3
 interface Vlan181
  description EST-SDWAN-VB-VPN0-GW
  ip address 173.16.30.9 255.255.255.248
+ ip nat inside
 !
 interface Vlan205
  description EST-SDWAN-CRTL-VPN0-GW
  ip address 173.16.30.33 255.255.255.224
+ ip nat inside
 !
 router ospf 10
  router-id 10.1.1.5
@@ -117,11 +137,17 @@ router ospf 10
  network 10.1.1.5 0.0.0.0 area 0
  network 172.16.30.0 0.0.0.3 area 0
 !
+ip nat inside source static 173.16.30.10 210.16.30.1
+ip nat inside source static 173.16.30.34 210.16.30.5
+ip nat inside source static 173.16.30.35 210.16.30.13
 ip forward-protocol nd
 !
 ip http server
 ip http secure-server
 !
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.100 210.16.30.2 name INET_GW_01
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.101 210.16.30.6 name INET_GW_02
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.102 210.16.30.14 name INET_GW_03
 ip ssh server algorithm mac hmac-sha1-96
 ip ssh server algorithm encryption aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr

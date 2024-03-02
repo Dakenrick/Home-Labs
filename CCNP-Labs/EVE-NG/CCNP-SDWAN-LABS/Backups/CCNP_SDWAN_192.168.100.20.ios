@@ -2,10 +2,10 @@ Building configuration...
 
   
   
-Current configuration : 5968 bytes
+Current configuration : 6012 bytes
 !
-! Last configuration change at 18:49:31 UTC Sat Mar 2 2024 by cisco
-! NVRAM config last updated at 18:49:32 UTC Sat Mar 2 2024 by cisco
+! Last configuration change at 19:40:36 UTC Sat Mar 2 2024 by cisco
+! NVRAM config last updated at 19:40:38 UTC Sat Mar 2 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -129,8 +129,8 @@ interface GigabitEthernet0/0
  media-type rj45
 !
 interface GigabitEthernet0/1
- no ip address
- shutdown
+ description Internet-GI0/1
+ ip address 210.16.30.10 255.255.255.252
  duplex auto
  speed auto
  media-type rj45
