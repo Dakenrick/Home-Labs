@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4257 bytes
+Current configuration : 4279 bytes
 !
-! Last configuration change at 14:47:04 UTC Sat Mar 2 2024 by cisco
+! Last configuration change at 18:50:44 UTC Sat Mar 2 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -44,7 +44,7 @@ mmi snmp-timeout 180
 !
 !
 no ip domain lookup
-ip domain name dsa.com
+ip domain name DSA.local
 ip cef
 no ipv6 cef
 !
@@ -134,6 +134,7 @@ interface GigabitEthernet0/7
  media-type rj45
 !
 router ospf 10
+ router-id 10.1.1.2
  redistribute connected subnets
  network 10.1.1.0 0.0.0.255 area 0
  network 172.16.50.0 0.0.0.3 area 0

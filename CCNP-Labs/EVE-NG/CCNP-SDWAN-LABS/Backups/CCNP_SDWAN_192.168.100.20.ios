@@ -2,9 +2,10 @@ Building configuration...
 
   
   
-Current configuration : 5795 bytes
+Current configuration : 5968 bytes
 !
-! No configuration change since last restart
+! Last configuration change at 18:49:31 UTC Sat Mar 2 2024 by cisco
+! NVRAM config last updated at 18:49:32 UTC Sat Mar 2 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -46,7 +47,7 @@ mmi snmp-timeout 180
 !
 !
 no ip domain lookup
-ip domain name mylab.com
+ip domain name DSA.local
 ip cef
 no ipv6 cef
 !
@@ -114,6 +115,10 @@ redundancy
 !
 !
 !
+!
+interface Loopback0
+ description Router-ID
+ ip address 10.1.1.1 255.255.255.255
 !
 interface GigabitEthernet0/0
  description Management-Intf-Lab-100
