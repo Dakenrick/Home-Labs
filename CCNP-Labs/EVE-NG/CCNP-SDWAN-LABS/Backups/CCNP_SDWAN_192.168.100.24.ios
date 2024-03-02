@@ -1,0 +1,100 @@
+system
+ host-name               EAST-VB-01
+ system-ip               100.0.0.1
+ site-id                 1100001
+ admin-tech-on-failure
+ no route-consistency-check
+ no vrrp-advt-with-phymac
+ organization-name       DSA
+ upgrade-confirm         15
+ vbond 173.16.30.10 local
+ aaa
+  auth-order      local radius tacacs
+  usergroup basic
+   task system read
+   task interface read
+  !
+  usergroup netadmin
+  !
+  usergroup operator
+   task system read
+   task interface read
+   task policy read
+   task routing read
+   task security read
+  !
+  usergroup tenantadmin
+  !
+  user admin
+   password $6$5126d8d0acf0094f$6UQDh545hsm4sx37zmCUH.g3goV8r2OHSQdA1i4zyWWI/o9dC9NtG0poe813cYFoGAqkc4orXV2K./u6lThlz/
+  !
+  user cisco
+   password $6$37ec8377ab4f2d98$rWzLsAywjbqEZP7MrCo9y9yWgQX3IUwTH6kqUVfzz.iJVSwwOYF82ygxqOSP8MgJPnJuEeZacqxADY6sFEeCY1
+   group    netadmin
+  !
+  ciscotacro-user true
+  ciscotacrw-user true
+ !
+ logging
+  disk
+   enable
+  !
+ !
+ ntp
+  parent
+   no enable
+   stratum 5
+  exit
+  server 192.168.100.20
+   source-interface eth0
+   vpn              512
+   version          4
+  exit
+ !
+!
+omp
+ no shutdown
+ graceful-restart
+ advertise connected
+ advertise static
+!
+security
+ ipsec
+  integrity-type ip-udp-esp esp
+ !
+!
+vpn 0
+ dns 4.2.2.2 secondary
+ dns 8.8.8.8 primary
+ host vb.dsa.local ip 210.16.30.1
+ interface ge0/0
+  description Tranport-Uplink-VPN-0
+  ip address 173.16.30.10/29
+  ipv6 dhcp-client
+  tunnel-interface
+   encapsulation ipsec
+   allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+  !
+  no shutdown
+ !
+ ip route 0.0.0.0/0 172.16.30.9
+!
+vpn 512
+ interface eth0
+  ip address 192.168.100.24/24
+  ipv6 dhcp-client
+  icmp-redirect-disable
+  no shutdown
+ !
+!
+EAST-VB-01# 
