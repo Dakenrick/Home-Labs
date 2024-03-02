@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4146 bytes
+Current configuration : 4257 bytes
 !
-! Last configuration change at 07:35:24 UTC Sat Mar 2 2024 by cisco
+! Last configuration change at 14:47:04 UTC Sat Mar 2 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -76,11 +76,12 @@ interface Loopback0
  ip address 10.1.1.2 255.255.255.255
 !
 interface GigabitEthernet0/0
- no ip address
- shutdown
+ description PE-RTR-GI0/0
+ ip address 172.16.50.1 255.255.255.252
  duplex auto
  speed auto
  media-type rj45
+ mpls ip
 !
 interface GigabitEthernet0/1
  description EAST-U00-OR-01-GI2.450
@@ -88,7 +89,6 @@ interface GigabitEthernet0/1
  duplex auto
  speed auto
  media-type rj45
- mpls ip
 !
 interface GigabitEthernet0/2
  description EAST-U00-OR-02-GI2.450
@@ -96,7 +96,6 @@ interface GigabitEthernet0/2
  duplex auto
  speed auto
  media-type rj45
- mpls ip
 !
 interface GigabitEthernet0/3
  description WEST-U00-OR-01-GI2.450
@@ -104,7 +103,6 @@ interface GigabitEthernet0/3
  duplex auto
  speed auto
  media-type rj45
- mpls ip
 !
 interface GigabitEthernet0/4
  description WEST-U00-OR-02-GI2.450
@@ -112,7 +110,6 @@ interface GigabitEthernet0/4
  duplex auto
  speed auto
  media-type rj45
- mpls ip
 !
 interface GigabitEthernet0/5
  no ip address
@@ -137,7 +134,9 @@ interface GigabitEthernet0/7
  media-type rj45
 !
 router ospf 10
+ redistribute connected subnets
  network 10.1.1.0 0.0.0.255 area 0
+ network 172.16.50.0 0.0.0.3 area 0
 !
 ip forward-protocol nd
 !
@@ -151,6 +150,7 @@ ip ssh server algorithm encryption aes256-ctr
 ipv6 ioam timestamp
 !
 !
+mpls ldp router-id Loopback0
 !
 control-plane
 !

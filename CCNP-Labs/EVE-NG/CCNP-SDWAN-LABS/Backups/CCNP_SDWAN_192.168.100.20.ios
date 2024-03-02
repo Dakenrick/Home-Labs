@@ -2,10 +2,9 @@ Building configuration...
 
   
   
-Current configuration : 5887 bytes
+Current configuration : 5795 bytes
 !
-! Last configuration change at 06:02:57 UTC Sat Mar 2 2024 by cisco
-! NVRAM config last updated at 04:11:16 UTC Sat Mar 2 2024
+! No configuration change since last restart
 !
 version 15.9
 service timestamps debug datetime msec
@@ -61,7 +60,6 @@ crypto pki server CA
  issuer-name cn=sdwan.mylab.com,O=Mylab,OU=IT
  lifetime certificate 3500
  lifetime ca-certificate 7000
- shutdown
  database url flash:/pki/
 !
 crypto pki trustpoint CA
