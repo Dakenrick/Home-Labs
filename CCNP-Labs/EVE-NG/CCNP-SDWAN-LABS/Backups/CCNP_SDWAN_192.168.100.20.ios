@@ -2,10 +2,10 @@ Building configuration...
 
   
   
-Current configuration : 6012 bytes
+Current configuration : 6106 bytes
 !
-! Last configuration change at 19:40:36 UTC Sat Mar 2 2024 by cisco
-! NVRAM config last updated at 19:40:38 UTC Sat Mar 2 2024 by cisco
+! Last configuration change at 23:17:11 UTC Sat Mar 2 2024 by cisco
+! NVRAM config last updated at 23:17:20 UTC Sat Mar 2 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -157,6 +157,7 @@ no ip http secure-server
 ip http secure-active-session-modules none
 ip http session-module-list RA SCEP
 ip http active-session-modules RA
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/1 210.16.30.9 name INET_GW_01
 ip ssh version 2
 ip ssh server algorithm mac hmac-sha1-96
 ip ssh server algorithm encryption aes256-ctr
@@ -200,6 +201,7 @@ line aux 0
 line vty 0 4
  login local
  transport input ssh
+ transport output ssh
 !
 no scheduler allocate
 ntp master 1
