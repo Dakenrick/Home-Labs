@@ -1,0 +1,39 @@
+crypto key generate rsa modulus 2048 label PKI 
+!
+crypto pki server CA
+ database url flash:/pki/
+ database level complete
+ issuer-name cn=rootca.dsa.local,O=dsa,OU=home
+ hash sha256
+ lifetime certificate 3500
+ lifetime ca-certificate 7000
+ database archive pkcs12 password Cisco123
+ grant auto
+!
+crypto pki export CA pem url flash:/pki/
+!
+crypto pki export CA pem terminal
+!
+crypto pki server CA request pkcs10 terminal
+!
+EAST-VM-01# request certificate install home/admin/east-vm-01.crt 
+Installing certificate via VPN 0
+Copying /home/admin/east-vm-01.crt to /tmp/vconfd/server.crt.tmp via VPN 0
+Certificate Install Unsuccessful Error: root-ca-chain unable to validate the certificate... Aborting !
+Last command failed -no_stderr openssl verify -verbose -CAfile /usr/share/viptela/root-ca.crt /tmp/vconfd/server.crt.tmp returned 2
+Last command output C = US, ST = California, L = San Jose, OU = dsa, O = Cisco Systems, CN = vmanage-0f209b5a-cfec-47ea-803d-536d1afbc664-3.viptela.com, emailAddress = support@viptela.com
+error 7 at 0 depth lookup: certificate signature failure
+140469070562496:error:0408D078:rsa routines:pkey_rsa_verifyrecover:key size too small:rsa_ossl.c:565:
+140469070562496:error:0D0C5006:asn1 encoding routines:ASN1_item_verify:EVP lib:crypto/asn1/a_verify.c:170:
+error /tmp/vconfd/server.crt.tmp: verification failed
+!
+EAST-VM-01# request certificate install home/admin/east-vm-01.crt 
+Installing certificate via VPN 0
+Copying /home/admin/east-vm-01.crt to /tmp/vconfd/server.crt.tmp via VPN 0
+Certificate Install Unsuccessful Error: root-ca-chain unable to validate the certificate... Aborting !
+Last command failed -no_stderr openssl verify -verbose -CAfile /usr/share/viptela/root-ca.crt /tmp/vconfd/server.crt.tmp returned 2
+Last command output C = US, ST = California, L = San Jose, OU = dsa, O = Cisco Systems, CN = vmanage-0f209b5a-cfec-47ea-803d-536d1afbc664-3.viptela.com, emailAddress = support@viptela.com
+error 7 at 0 depth lookup: certificate signature failure
+140469070562496:error:0408D078:rsa routines:pkey_rsa_verifyrecover:key size too small:rsa_ossl.c:565:
+140469070562496:error:0D0C5006:asn1 encoding routines:ASN1_item_verify:EVP lib:crypto/asn1/a_verify.c:170:
+error /tmp/vconfd/server.crt.tmp: verification failed
