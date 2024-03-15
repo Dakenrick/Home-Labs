@@ -26,10 +26,10 @@ system
   usergroup tenantadmin
   !
   user admin
-   password $6$5126d8d0acf0094f$6UQDh545hsm4sx37zmCUH.g3goV8r2OHSQdA1i4zyWWI/o9dC9NtG0poe813cYFoGAqkc4orXV2K./u6lThlz/
+   password $6$e30c8934880b4b8d$ChwQpkVplXoK0hvjOm99WIqMIRW5kuwqoCHV0NyVp5fNE6BTrjpnZ4Obhp5r3v0s9syFAGqKyy.uctzk1bVFQ0
   !
   user cisco
-   password $6$37ec8377ab4f2d98$rWzLsAywjbqEZP7MrCo9y9yWgQX3IUwTH6kqUVfzz.iJVSwwOYF82ygxqOSP8MgJPnJuEeZacqxADY6sFEeCY1
+   password $6$d4453d53b7c615c5$s.Oi29CDdbSUraxK7rXPTReHsQetcTt9BmSeNtGuMo/GsKvFmsX0GQDn6AIb0MrE1m9peoieafpVfQf.IcUHp.
    group    netadmin
   !
   ciscotacro-user true

@@ -27,10 +27,10 @@ system
   usergroup tenantadmin
   !
   user admin
-   password $6$e15688eebc4b44ce$ivAY772UFYreM6qY8seTlXI10fID9gi2m1rDn/bOSBhdcZthqRCLnE6XaXr7mAQfxF6BoeZc2DFKIx0JohCuC1
+   password $6$20577240f37a1d53$C85sJ5OkNiyPYJjD3NZ0apcULcPHVWL/0EimNxbn/zHToDkdCbAtL1.cjC9Psis8ZV8auAf9urGYNPvHOyLOl0
   !
   user cisco
-   password $6$d8564ae0a70247eb$2l9Xi1xJcUc2t9VS/yq9Qem83IizUfb4Zupc1Pmz5X.0BY5Dp1wsQx/g7y1EwW/UfDXkoQi4lKdB6qbCdfiz9/
+   password $6$d21d3d9b01b50d32$tBpsOSqz3WXvd6PjJxz9UnpoFL.RFqG6hG1fXm4DM0Ha6fMrxsTDtoTXm0kERnCuh/OjmBw0pFEf1NYaQnItD0
    group    netadmin
   !
   ciscotacro-user true
@@ -91,3 +91,4 @@ vpn 512
   no shutdown
  !
 !
+EAST-VS-01# 

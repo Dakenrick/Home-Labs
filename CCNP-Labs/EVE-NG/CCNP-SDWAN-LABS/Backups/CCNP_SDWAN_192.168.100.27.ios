@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4994 bytes
+Current configuration : 5067 bytes
 !
-! Last configuration change at 20:25:45 UTC Sat Mar 2 2024 by cisco
+! Last configuration change at 19:52:24 UTC Thu Mar 14 2024
 !
 version 15.2
 service timestamps debug datetime msec
@@ -24,6 +24,7 @@ vrf definition Mgmt-intf
  address-family ipv6
  exit-address-family
 !
+no logging console
 !
 username cisco privilege 15 secret 5 $1$yNuE$h49Yrhnlf.HC4iwV9FEKB.
 no aaa new-model
@@ -137,9 +138,9 @@ router ospf 10
  network 10.1.1.5 0.0.0.0 area 0
  network 172.16.30.0 0.0.0.3 area 0
 !
-ip nat inside source static 173.16.30.10 210.16.30.1
-ip nat inside source static 173.16.30.34 210.16.30.5
-ip nat inside source static 173.16.30.35 210.16.30.13
+ip nat inside source static 173.16.30.10 interface GigabitEthernet0/3.100
+ip nat inside source static 173.16.30.34 interface GigabitEthernet0/3.101
+ip nat inside source static 173.16.30.35 interface GigabitEthernet0/3.102
 ip forward-protocol nd
 !
 ip http server

@@ -1,8 +1,6 @@
 Building configuration...
 
-Current configuration : 4279 bytes
-!
-! Last configuration change at 18:50:44 UTC Sat Mar 2 2024 by cisco
+Current configuration : 4209 bytes
 !
 version 15.9
 service timestamps debug datetime msec

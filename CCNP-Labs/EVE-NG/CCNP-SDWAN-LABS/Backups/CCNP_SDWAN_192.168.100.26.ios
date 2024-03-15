@@ -4,6 +4,7 @@ system
  site-id               1100001
  admin-tech-on-failure
  no vrrp-advt-with-phymac
+ sp-organization-name  DSA
  organization-name     DSA
  vbond vb.dsa.local
  aaa
@@ -44,10 +45,10 @@ system
   usergroup tenantadmin
   !
   user admin
-   password $6$1c39d6557f870808$nopqzNMRd8HT/LKYVluhBNG0JbnEsKUUtBXgMLUl513OIl5KLpUMa3vzMTlfMmKoNiNuzwY/rnH8js90XrIUC/
+   password $6$ccdc49809b3f47f0$S9O6MIXJEes0dlNFZ1saj8UEuquFE.8WrjRjslevJDeeYW.qlPdFuwK9j63LHl9Pt2tL5/0tn9zjA2AsRj9Jg1
   !
   user cisco
-   password $6$2fcf829665ff152a$7n2XtQLhYicJfh7rH4RKC4o0FL7GkInJjRXug58BQdl5Zn71jB68CYdBvJbMJCsdSE/xegI8K587PqE6vqlgt0
+   password $6$638b539aa122fdf2$m.1sqPIo3giCEW5VhCrx1pJlZUlG01kLxzHD4tAPHBWtaTKExQx2UDriwjq5PfX61sP2Q8PCGWFpG.G2reniG0
    group    netadmin
   !
   ciscotacro-user true
