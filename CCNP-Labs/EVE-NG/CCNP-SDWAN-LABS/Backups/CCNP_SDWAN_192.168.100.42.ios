@@ -1,8 +1,3 @@
-Building configuration...
-
-Current configuration : 5239 bytes
-!
-! Last configuration change at 01:25:52 UTC Wed Apr 3 2024 by cisco
 !
 version 15.2
 service timestamps debug datetime msec
@@ -10,7 +5,7 @@ service timestamps log datetime msec
 no service password-encryption
 service compress-config
 !
-hostname EAST-DC-SW01
+hostname WEST-DC-SW01
 !
 boot-start-marker
 boot-end-marker
@@ -62,51 +57,51 @@ spanning-tree extend system-id
 !
 interface Loopback0
  description Router-ID
- ip address 10.1.1.5 255.255.255.255
+ ip address 10.1.1.6 255.255.255.255
 !
 interface GigabitEthernet0/0
- description EAST-VB-01-GE0/0
+ description WEST-VB-01-GE0/0
  switchport access vlan 181
  switchport mode access
  negotiation auto
 !
 interface GigabitEthernet0/1
- description EAST-VM-01-ETH0
+ description WEST-VM-01-ETH0
  switchport access vlan 205
  switchport mode access
  negotiation auto
 !
 interface GigabitEthernet0/2
- description EAST-VS-01-ETH0
+ description WEST-VS-01-ETH0
  switchport access vlan 205
  switchport mode access
  negotiation auto
 !
 interface GigabitEthernet0/3
- description Internet-GI0/0
+ description Internet-GI0/2
  no switchport
  no ip address
  negotiation auto
 !
 interface GigabitEthernet0/3.100
  encapsulation dot1Q 100
- ip address 210.16.30.1 255.255.255.252
+ ip address 210.16.30.17 255.255.255.252
  ip nat outside
 !
 interface GigabitEthernet0/3.101
  encapsulation dot1Q 101
- ip address 210.16.30.5 255.255.255.252
+ ip address 210.16.30.21 255.255.255.252
  ip nat outside
 !
 interface GigabitEthernet0/3.102
  encapsulation dot1Q 102
- ip address 210.16.30.13 255.255.255.252
+ ip address 210.16.30.25 255.255.255.252
  ip nat outside
 !
 interface GigabitEthernet1/0
- description PE-RTR-GI0/1
+ description PE-RTR-GI0/2
  no switchport
- ip address 172.16.30.2 255.255.255.252
+ ip address 172.16.40.2 255.255.255.252
  negotiation auto
 !
 interface GigabitEthernet1/1
@@ -119,55 +114,47 @@ interface GigabitEthernet1/3
  description Management-Intf-Lab-100
  no switchport
  vrf forwarding Mgmt-intf
- ip address 192.168.100.27 255.255.255.0
+ ip address 192.168.100.42 255.255.255.0
  negotiation auto
 !
 interface Vlan181
- description EST-SDWAN-VB-VPN0-GW
- ip address 173.16.30.9 255.255.255.248
+ description WST-SDWAN-VB-VPN0-GW
+ ip address 173.16.30.17 255.255.255.248
  ip nat inside
 !
 interface Vlan205
- description EST-SDWAN-CRTL-VPN0-GW
- ip address 173.16.30.33 255.255.255.224
+ description WST-SDWAN-CRTL-VPN0-GW
+ ip address 173.16.30.65 255.255.255.224
  ip nat inside
 !
 router ospf 10
- router-id 10.1.1.5
+ router-id 10.1.1.6
  redistribute connected subnets route-map SDWAN-CRTL
- network 10.1.1.5 0.0.0.0 area 0
- network 172.16.30.0 0.0.0.3 area 0
+ network 10.1.1.6 0.0.0.0 area 0
+ network 172.16.40.0 0.0.0.3 area 0
 !
-ip nat inside source static 173.16.30.10 interface GigabitEthernet0/3.100
-ip nat inside source static 173.16.30.34 interface GigabitEthernet0/3.101
-ip nat inside source static 173.16.30.35 interface GigabitEthernet0/3.102
+ip nat inside source static 173.16.30.18 interface GigabitEthernet0/3.100
+ip nat inside source static 173.16.30.66 interface GigabitEthernet0/3.101
+ip nat inside source static 173.16.30.67 interface GigabitEthernet0/3.102
 ip forward-protocol nd
 !
 ip http server
 ip http secure-server
 !
-ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.100 210.16.30.2 name INET_GW_01
-ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.101 210.16.30.6 name INET_GW_02
-ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.102 210.16.30.14 name INET_GW_03
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.100 210.16.30.18 name INET_GW_01
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.101 210.16.30.22 name INET_GW_02
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.102 210.16.30.26 name INET_GW_03
 ip ssh server algorithm mac hmac-sha1-96
 ip ssh server algorithm encryption aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !
-ip access-list standard SDWAN-CRTL
- permit 173.16.30.8 0.0.0.7
- permit 173.16.30.32 0.0.0.31
-ip access-list standard SDWAN-INET
- deny   210.16.30.0 0.0.0.3
- deny   210.16.30.4 0.0.0.3
- deny   210.16.30.12 0.0.0.3
 !
 !
+ip prefix-list SDWAN-CRTL seq 10 permit 173.16.30.16/29
+ip prefix-list SDWAN-CRTL seq 20 permit 173.16.30.64/27
 !
 !
 route-map SDWAN-CRTL permit 10
- match ip address SDWAN-INET
-!
-route-map SDWAN-CRTL permit 20
  match ip address SDWAN-CRTL
 !
 !

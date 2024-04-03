@@ -2,7 +2,9 @@ Building configuration...
 
   
   
-Current configuration : 4088 bytes
+Current configuration : 4241 bytes
+!
+! Last configuration change at 23:28:41 UTC Tue Apr 2 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -91,8 +93,8 @@ interface GigabitEthernet0/1
  media-type rj45
 !
 interface GigabitEthernet0/2
- no ip address
- shutdown
+ description WEST-DC-SW01-GI0/2
+ ip address 172.16.40.1 255.255.255.252
  duplex auto
  speed auto
  media-type rj45
@@ -138,6 +140,7 @@ router ospf 10
  redistribute connected subnets
  network 10.1.1.0 0.0.0.255 area 0
  network 172.16.30.0 0.0.0.3 area 0
+ network 172.16.40.0 0.0.0.3 area 0
  network 172.16.50.0 0.0.0.3 area 0
 !
 ip forward-protocol nd

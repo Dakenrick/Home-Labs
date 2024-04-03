@@ -1,7 +1,7 @@
 system
  host-name             EAST-VM-01
  system-ip             100.0.0.3
- site-id               1100001
+ site-id               1110001
  admin-tech-on-failure
  no vrrp-advt-with-phymac
  sp-organization-name  DSA

@@ -1,13 +1,13 @@
 system
- host-name               EAST-VB-01
- system-ip               100.0.0.1
- site-id                 1110001
+ host-name               WEST-VB-01
+ system-ip               100.0.0.4
+ site-id                 1120001
  admin-tech-on-failure
  no route-consistency-check
  no vrrp-advt-with-phymac
  organization-name       DSA
  upgrade-confirm         15
- vbond 173.16.30.10 local
+ vbond 173.16.30.18 local
  aaa
   auth-order      local radius tacacs
   usergroup basic
@@ -66,10 +66,10 @@ security
 vpn 0
  dns 4.2.2.2 secondary
  dns 8.8.8.8 primary
- host vb.dsa.local ip 210.16.30.1
+ host vb.dsa.local ip 210.16.30.17
  interface ge0/0
   description Tranport-Uplink-VPN-0
-  ip address 173.16.30.10/29
+  ip address 173.16.30.18/29
   ipv6 dhcp-client
   tunnel-interface
    encapsulation ipsec
@@ -87,11 +87,11 @@ vpn 0
   !
   no shutdown
  !
- ip route 0.0.0.0/0 173.16.30.9
+ ip route 0.0.0.0/0 173.16.30.17
 !
 vpn 512
  interface eth0
-  ip address 192.168.100.24/24
+  ip address 192.168.100.39/24
   ipv6 dhcp-client
   icmp-redirect-disable
   no shutdown

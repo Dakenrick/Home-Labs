@@ -1,13 +1,11 @@
 system
- host-name             EAST-VS-01
- system-ip             100.0.0.2
- site-id               1110001
- controller-group-id   1
+ host-name             WEST-VM-01
+ system-ip             100.0.0.6
+ site-id               1120001
  admin-tech-on-failure
  no vrrp-advt-with-phymac
  sp-organization-name  DSA
  organization-name     DSA
- upgrade-confirm       15
  vbond vb.dsa.local
  aaa
   auth-order      local radius tacacs
@@ -15,7 +13,12 @@ system
    task system read
    task interface read
   !
+  usergroup global
+  !
   usergroup netadmin
+  !
+  usergroup network_operations
+   task policy read write
   !
   usergroup operator
    task system read
@@ -24,13 +27,28 @@ system
    task routing read
    task security read
   !
+  usergroup resource_group_admin
+   task system read
+   task interface read
+  !
+  usergroup resource_group_basic
+   task system read
+   task interface read
+  !
+  usergroup resource_group_operator
+   task system read
+   task interface read
+  !
+  usergroup security_operations
+   task security read write
+  !
   usergroup tenantadmin
   !
   user admin
-   password $6$20577240f37a1d53$C85sJ5OkNiyPYJjD3NZ0apcULcPHVWL/0EimNxbn/zHToDkdCbAtL1.cjC9Psis8ZV8auAf9urGYNPvHOyLOl0
+   password $6$ccdc49809b3f47f0$S9O6MIXJEes0dlNFZ1saj8UEuquFE.8WrjRjslevJDeeYW.qlPdFuwK9j63LHl9Pt2tL5/0tn9zjA2AsRj9Jg1
   !
   user cisco
-   password $6$d21d3d9b01b50d32$tBpsOSqz3WXvd6PjJxz9UnpoFL.RFqG6hG1fXm4DM0Ha6fMrxsTDtoTXm0kERnCuh/OjmBw0pFEf1NYaQnItD0
+   password $6$638b539aa122fdf2$m.1sqPIo3giCEW5VhCrx1pJlZUlG01kLxzHD4tAPHBWtaTKExQx2UDriwjq5PfX61sP2Q8PCGWFpG.G2reniG0
    group    netadmin
   !
   ciscotacro-user true
@@ -41,33 +59,28 @@ system
    enable
   !
  !
+ ssh-server
+  cipher aes-128-192
+  kex-algo sha1
+ !
  ntp
   parent
    no enable
    stratum 5
   exit
   server 192.168.100.20
-   source-interface eth1
+   source-interface eth2
    vpn              512
    version          4
   exit
  !
 !
-omp
- no shutdown
- filter-route
-  no outbound affinity-group-preference
-  no outbound tloc-color
- exit
- graceful-restart
- outbound-policy-caching
-!
 vpn 0
  dns 4.2.2.2 secondary
  dns 8.8.8.8 primary
- host vb.dsa.local ip 173.16.30.10 210.16.30.1
+ host vb.dsa.local ip 173.16.30.18 210.16.30.17
  interface eth0
-  ip address 173.16.30.34/27
+  ip address 173.16.30.67/27
   ipv6 dhcp-client
   tunnel-interface
    color private1
@@ -79,14 +92,15 @@ vpn 0
    no allow-service netconf
    no allow-service ntp
    no allow-service stun
+   allow-service https
   !
   no shutdown
  !
- ip route 0.0.0.0/0 173.16.30.33
+ ip route 0.0.0.0/0 173.16.30.65
 !
 vpn 512
- interface eth1
-  ip address 192.168.100.25/24
+ interface eth2
+  ip address 192.168.100.41/24
   icmp-redirect-disable
   no shutdown
  !
