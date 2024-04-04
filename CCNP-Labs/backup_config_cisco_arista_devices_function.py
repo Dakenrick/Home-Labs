@@ -44,4 +44,4 @@ def BACKUP(TYPE, IP_LIST, USERNAME, PASSWORD):
         print('\n Finished backing up config \n')
 
 BACKUP(TYPE_XE, CCNP_SDWAN, 'cisco', 'Cisco123')
-BACKUP(TYPE_XE, CCNP_CRTL, 'cisco', 'Cisco123')
+BACKUP(TYPE_XE, CCNP_CRTL, 'admin', 'Cisco123')

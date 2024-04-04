@@ -78,7 +78,7 @@ system
 vpn 0
  dns 4.2.2.2 secondary
  dns 8.8.8.8 primary
- host vb.dsa.local ip 173.16.30.10 210.16.30.1
+ host vb.dsa.local ip 173.16.30.10 173.16.30.18 210.16.30.1 210.16.30.17
  interface eth0
   ip address 173.16.30.35/27
   ipv6 dhcp-client
