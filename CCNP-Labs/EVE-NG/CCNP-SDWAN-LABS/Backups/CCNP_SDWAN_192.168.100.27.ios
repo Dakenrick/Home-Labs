@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 5239 bytes
+Current configuration : 5449 bytes
 !
-! Last configuration change at 01:25:52 UTC Wed Apr 3 2024 by cisco
+! Last configuration change at 07:22:41 UTC Thu Apr 4 2024 by cisco
 !
 version 15.2
 service timestamps debug datetime msec
@@ -110,6 +110,9 @@ interface GigabitEthernet1/0
  negotiation auto
 !
 interface GigabitEthernet1/1
+ description EAST-VM-01-ETH1
+ switchport access vlan 206
+ switchport mode access
  negotiation auto
 !
 interface GigabitEthernet1/2
@@ -132,15 +135,19 @@ interface Vlan205
  ip address 173.16.30.33 255.255.255.224
  ip nat inside
 !
+interface Vlan206
+ description EST-SDWAN-CLUSTER-VPN0-GW
+ ip address 173.16.30.97 255.255.255.252
+!
 router ospf 10
  router-id 10.1.1.5
  redistribute connected subnets route-map SDWAN-CRTL
  network 10.1.1.5 0.0.0.0 area 0
  network 172.16.30.0 0.0.0.3 area 0
 !
-ip nat inside source static 173.16.30.10 interface GigabitEthernet0/3.100
-ip nat inside source static 173.16.30.34 interface GigabitEthernet0/3.101
 ip nat inside source static 173.16.30.35 interface GigabitEthernet0/3.102
+ip nat inside source static 173.16.30.34 interface GigabitEthernet0/3.101
+ip nat inside source static 173.16.30.10 interface GigabitEthernet0/3.100
 ip forward-protocol nd
 !
 ip http server
@@ -156,6 +163,7 @@ ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip access-list standard SDWAN-CRTL
  permit 173.16.30.8 0.0.0.7
  permit 173.16.30.32 0.0.0.31
+ permit 173.16.30.96 0.0.0.3
 ip access-list standard SDWAN-INET
  deny   210.16.30.0 0.0.0.3
  deny   210.16.30.4 0.0.0.3

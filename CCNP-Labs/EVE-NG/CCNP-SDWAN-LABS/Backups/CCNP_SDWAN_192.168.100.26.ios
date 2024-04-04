@@ -96,6 +96,11 @@ vpn 0
   !
   no shutdown
  !
+ interface eth1
+  description Cluster-Interface-VPN0
+  ip address 173.16.30.97/30
+  no shutdown
+ !
  ip route 0.0.0.0/0 173.16.30.33
 !
 vpn 512

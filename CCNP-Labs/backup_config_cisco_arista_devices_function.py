@@ -4,9 +4,8 @@ from paramiko.ssh_exception import SSHException
 import time
 import datetime
 
-CCNP_CRTL = ['192.168.100.24', '192.168.100.25', '192.168.100.26', '192.168.100.27', '192.168.100.36', '192.168.100.37', '192.168.100.38', 
-              '192.168.100.39', '192.168.100.40', '192.168.100.41', '192.168.100.42']
-CCNP_SDWAN = ['192.168.100.27', '192.168.100.36', '192.168.100.37', '192.168.100.38',]
+CCNP_CRTL = ['192.168.100.24', '192.168.100.25', '192.168.100.26', '192.168.100.39', '192.168.100.40', '192.168.100.41']
+CCNP_SDWAN = ['192.168.100.27', '192.168.100.36', '192.168.100.37', '192.168.100.38', '192.168.100.42']
 
 TYPE_XR = 'cisco_xr'
 TYPE_XE = 'cisco_xe'
@@ -44,5 +43,5 @@ def BACKUP(TYPE, IP_LIST, USERNAME, PASSWORD):
         SAVE_FILE.close
         print('\n Finished backing up config \n')
 
-#BACKUP(TYPE_XE, CCNP_SDWAN, 'cisco', 'Cisco123')
+BACKUP(TYPE_XE, CCNP_SDWAN, 'cisco', 'Cisco123')
 BACKUP(TYPE_XE, CCNP_CRTL, 'cisco', 'Cisco123')

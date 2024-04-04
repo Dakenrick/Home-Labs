@@ -1,3 +1,8 @@
+Building configuration...
+
+Current configuration : 5458 bytes
+!
+! Last configuration change at 07:23:41 UTC Thu Apr 4 2024 by cisco
 !
 version 15.2
 service timestamps debug datetime msec
@@ -5,7 +10,7 @@ service timestamps log datetime msec
 no service password-encryption
 service compress-config
 !
-hostname WEST-DC-SW01
+hostname WEST1-DC-SW01
 !
 boot-start-marker
 boot-end-marker
@@ -19,9 +24,8 @@ vrf definition Mgmt-intf
  address-family ipv6
  exit-address-family
 !
-no logging console
 !
-username cisco privilege 15 secret 5 $1$yNuE$h49Yrhnlf.HC4iwV9FEKB.
+username cisco privilege 15 secret 5 $1$zGfw$MeHsbyaBdVDYvx5H4z0lV1
 no aaa new-model
 !
 !
@@ -105,6 +109,9 @@ interface GigabitEthernet1/0
  negotiation auto
 !
 interface GigabitEthernet1/1
+ description WEST-VM-01-ETH1
+ switchport access vlan 206
+ switchport mode access
  negotiation auto
 !
 interface GigabitEthernet1/2
@@ -127,6 +134,10 @@ interface Vlan205
  ip address 173.16.30.65 255.255.255.224
  ip nat inside
 !
+interface Vlan206
+ description WST-SDWAN-CLUSTER-VPN0-GW
+ ip address 173.16.30.101 255.255.255.252
+!
 router ospf 10
  router-id 10.1.1.6
  redistribute connected subnets route-map SDWAN-CRTL
@@ -144,17 +155,27 @@ ip http secure-server
 ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.100 210.16.30.18 name INET_GW_01
 ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.101 210.16.30.22 name INET_GW_02
 ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/3.102 210.16.30.26 name INET_GW_03
+ip ssh version 2
 ip ssh server algorithm mac hmac-sha1-96
 ip ssh server algorithm encryption aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 !
+ip access-list standard SDWAN-CRTL
+ permit 173.16.30.16 0.0.0.7
+ permit 173.16.30.64 0.0.0.31
+ permit 173.16.30.100 0.0.0.3
+ip access-list standard SDWAN-INET
+ deny   210.16.30.16 0.0.0.3
+ deny   210.16.30.20 0.0.0.3
+ deny   210.16.30.24 0.0.0.3
 !
 !
-ip prefix-list SDWAN-CRTL seq 10 permit 173.16.30.16/29
-ip prefix-list SDWAN-CRTL seq 20 permit 173.16.30.64/27
 !
 !
 route-map SDWAN-CRTL permit 10
+ match ip address SDWAN-INET
+!
+route-map SDWAN-CRTL permit 20
  match ip address SDWAN-CRTL
 !
 !
