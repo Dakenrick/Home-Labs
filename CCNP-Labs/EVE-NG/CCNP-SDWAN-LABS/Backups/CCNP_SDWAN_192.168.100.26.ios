@@ -68,7 +68,7 @@ system
    no enable
    stratum 5
   exit
-  server 192.168.100.20
+  server 192.168.100.38
    source-interface eth2
    vpn              512
    version          4
@@ -76,9 +76,7 @@ system
  !
 !
 vpn 0
- dns 4.2.2.2 secondary
- dns 8.8.8.8 primary
- host vb.dsa.local ip 173.16.30.10 173.16.30.18 210.16.30.1 210.16.30.17
+ dns 10.1.1.1 primary
  interface eth0
   ip address 173.16.30.35/27
   ipv6 dhcp-client
@@ -98,7 +96,7 @@ vpn 0
  !
  interface eth1
   description Cluster-Interface-VPN0
-  ip address 173.16.30.97/30
+  ip address 173.16.30.98/30
   no shutdown
  !
  ip route 0.0.0.0/0 173.16.30.33

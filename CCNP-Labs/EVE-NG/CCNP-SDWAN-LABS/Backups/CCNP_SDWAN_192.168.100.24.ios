@@ -45,7 +45,7 @@ system
    no enable
    stratum 5
   exit
-  server 192.168.100.20
+  server 192.168.100.38
    source-interface eth0
    vpn              512
    version          4
@@ -64,8 +64,7 @@ security
  !
 !
 vpn 0
- dns 4.2.2.2 secondary
- dns 8.8.8.8 primary
+ dns 10.1.1.1 primary
  host vb.dsa.local ip 210.16.30.1
  interface ge0/0
   description Tranport-Uplink-VPN-0

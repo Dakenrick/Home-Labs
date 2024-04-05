@@ -1,9 +1,10 @@
 Building configuration...
 
   
-Current configuration : 4456 bytes
+Current configuration : 4635 bytes
 !
-! Last configuration change at 07:25:53 UTC Thu Apr 4 2024 by cisco
+! Last configuration change at 09:48:59 EDT Thu Apr 4 2024 by cisco
+! NVRAM config last updated at 09:49:04 EDT Thu Apr 4 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -29,6 +30,7 @@ no aaa new-model
 !
 !
 !
+clock timezone EDT 0 0
 mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
@@ -155,6 +157,7 @@ ip forward-protocol nd
 !
 no ip http server
 no ip http secure-server
+ip route 10.1.1.1 255.255.255.255 210.16.30.10 name DNS_CA_Server_Loopback
 ip ssh version 2
 ip ssh server algorithm mac hmac-sha1-96
 ip ssh server algorithm encryption aes256-ctr
@@ -200,5 +203,6 @@ line vty 0 4
  transport input ssh
 !
 no scheduler allocate
+ntp master 1
 !
 end
