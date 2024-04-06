@@ -38,12 +38,12 @@ def BACKUP(TYPE, IP_LIST, USERNAME, PASSWORD):
             continue
         
         print('Starting config backup ' + str(TNOW))
-        output = net_connect.send_command('show run', read_timeout=300)
+        output = net_connect.send_command('show sdwan run', read_timeout=300)
         SAVE_FILE = open(home_dir + 'CCNP_SDWAN_' + IP + '.ios', 'w')
         SAVE_FILE.write(output)
         SAVE_FILE.close
         print('\n Finished backing up config \n')
 
-BACKUP(TYPE_XE, CCNP_SDWAN, 'cisco', 'Cisco123')
+#BACKUP(TYPE_XE, CCNP_SDWAN, 'cisco', 'Cisco123')
 BACKUP(TYPE_XE, CCNP_EDGES, 'admin', 'Cisco12345')
 #BACKUP(TYPE_XE, CCNP_CRTL, 'admin', 'Cisco123')

@@ -1,270 +1,193 @@
-Building configuration...
-
-Current configuration : 3895 bytes
+system
+ system-ip             100.0.0.7
+ overlay-id            1
+ site-id               1110001
+ port-offset           0
+ control-session-pps   300
+ admin-tech-on-failure
+ sp-organization-name  DSA
+ organization-name     DSA
+ port-hop
+ track-transport
+ track-default-gateway
+ console-baud-rate     9600
+ no on-demand enable
+ on-demand idle-timeout 10
+ vbond vb.dsa.local port 12346
 !
-! Last configuration change at 19:10:18 UTC Sat Apr 6 2024 by admin
-!
-version 17.12
+memory free low-watermark processor 226492
 service timestamps debug datetime msec
 service timestamps log datetime msec
-service password-encryption
+no service tcp-small-servers
+no service udp-small-servers
+platform console serial
 platform qfp utilization monitor load 80
 platform punt-keepalive disable-kernel-core
 platform sslvpn use-pd
-platform console serial
-!
 hostname HQ-HUB-01
-!
-boot-start-marker
-boot-end-marker
-!
-!
-vrf definition 65528
- description Internal VRF
- !
- address-family ipv4
- exit-address-family
-!
-vrf definition 65529
- description Speedtest VRF
- !
- address-family ipv4
- exit-address-family
-!
+username admin privilege 15 secret 9 $9$pGHMj73lvrkkrU$dU5f54IGnvLdq.tuXpwhirmuyFA2RcXCsRC9xozXXsI
 vrf definition Mgmt-intf
- !
  address-family ipv4
- exit-address-family
+  exit-address-family
  !
  address-family ipv6
- exit-address-family
+  exit-address-family
+ !
 !
-aaa new-model
-!
-!
-aaa authentication login default local
-aaa authentication enable default enable
-aaa authorization console
-aaa authorization exec default local 
-!
-!
-aaa session-id common
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-ip name-server 10.1.1.1
+no ip finger
+no ip rcmd rcp-enable
+no ip rcmd rsh-enable
 no ip dhcp use class
-!
-!
-!
-login on-success log
-!
-!
-subscriber templating
+ip name-server 10.1.1.1
+ip route 0.0.0.0 0.0.0.0 172.16.30.5
+ip scp server enable
+no ip ssh bulk-mode
+no ip http server
+ip http secure-server
+ip nat settings central-policy
+ip nat settings gatekeeper-size 1024
 ipv6 unicast-routing
 ipv6 rip vrf-mode enable
-fhrp version vrrp v3
-vtp version 1
-!
-! 
-! 
-! 
-! 
-!
-multilink bundle-name authenticated
-!
-!
-!
-!
-!
-!
-!
-!
-crypto pki trustpoint TP-self-signed-868224893
- enrollment selfsigned
- revocation-check crl
- rsakeypair TP-self-signed-868224893
- hash sha256
-!
-crypto pki trustpoint SLA-TrustPoint
- enrollment pkcs12
- revocation-check crl
- hash sha256
-!
-!
-crypto pki certificate chain TP-self-signed-868224893
-crypto pki certificate chain SLA-TrustPoint
-!
-!
-!
-!
-!
-!
-!
-!
-!
-license udi pid C8000V sn C8K-1b292d53-139e-4697-a25d-525823c7a19d
-memory free low-watermark processor 226492
-diagnostic bootup level minimal
-!
-!
-spanning-tree extend system-id
-!
-!
-!
-username admin privilege 15 secret 9 $9$pGHMj73lvrkkrU$dU5f54IGnvLdq.tuXpwhirmuyFA2RcXCsRC9xozXXsI
-!
-redundancy
-!
-!
-!
-no crypto ikev2 diagnose error
-!
-!
-!
-! 
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-!
-! 
-! 
-!
-!
-interface Loopback65528
- vrf forwarding 65528
- ip address 192.168.1.1 255.255.255.255
-!
-interface Loopback65529
- vrf forwarding 65529
- ip address 11.1.0.7 255.255.255.255
-!
+interface GigabitEthernet1
+ description Management Interface
+ no shutdown
+ vrf forwarding Mgmt-intf
+ ip address 192.168.100.28 255.255.255.0
+ no mop enabled
+ no mop sysid
+ negotiation auto
+exit
+interface GigabitEthernet2
+ description VPN-0_Underlay-Interface-1
+ no shutdown
+ no ip redirects
+ no ip unreachables
+ no mop enabled
+ no mop sysid
+ negotiation auto
+exit
+interface GigabitEthernet2.450
+ description MPLS-WAN-Transport-1
+ no shutdown
+ encapsulation dot1Q 450
+ ip address 172.16.30.6 255.255.255.252
+exit
+interface GigabitEthernet3
+ no shutdown
+ no mop enabled
+ no mop sysid
+ negotiation auto
+exit
+interface GigabitEthernet4
+ no shutdown
+ no mop enabled
+ no mop sysid
+ negotiation auto
+exit
+interface GigabitEthernet5
+ no shutdown
+ no mop enabled
+ no mop sysid
+ negotiation auto
+exit
+interface GigabitEthernet6
+ no shutdown
+ no mop enabled
+ no mop sysid
+ negotiation auto
+exit
 interface Tunnel2
+ no shutdown
  ip unnumbered GigabitEthernet2
  no ip redirects
  ipv6 unnumbered GigabitEthernet2
  no ipv6 redirects
  tunnel source GigabitEthernet2
  tunnel mode sdwan
-!
-interface GigabitEthernet1
- description Management Interface
- vrf forwarding Mgmt-intf
- ip address 192.168.100.28 255.255.255.0
- negotiation auto
- no mop enabled
- no mop sysid
-!
-interface GigabitEthernet2
- description VPN-0_Underlay-Interface-1
- no ip address
- no ip redirects
- no ip unreachables
- negotiation auto
- no mop enabled
- no mop sysid
-!
-interface GigabitEthernet2.450
- description MPLS-WAN-Transport-1
- encapsulation dot1Q 450
- ip address 172.16.30.6 255.255.255.252
-!
-interface GigabitEthernet3
- no ip address
- negotiation auto
- no mop enabled
- no mop sysid
-!
-interface GigabitEthernet4
- no ip address
- negotiation auto
- no mop enabled
- no mop sysid
-!
-interface GigabitEthernet5
- no ip address
- negotiation auto
- no mop enabled
- no mop sysid
-!
-interface GigabitEthernet6
- no ip address
- negotiation auto
- no mop enabled
- no mop sysid
-!
-router omp
-!
-ip forward-protocol nd
-!
-no ip http server
-ip http secure-server
-ip route 0.0.0.0 0.0.0.0 172.16.30.5
-ip nat settings central-policy
-ip nat settings gatekeeper-size 1024
-ip nat route vrf 65528 0.0.0.0 0.0.0.0 global
-no ip nat service all-algs
-no ip ssh bulk-mode
-ip scp server enable
-!
-!
-!
-!
-!
-!
-!
-!
+exit
 control-plane
 !
-!
-mgcp behavior rsip-range tgcp-only
-mgcp behavior comedia-role none
-mgcp behavior comedia-check-media-src disable
-mgcp behavior comedia-sdp-force disable
-!
-mgcp profile default
-!
-!
-!
-!
-!
+aaa authentication enable default enable
+aaa authentication login default local
+aaa authorization console
+aaa authorization exec default local
+login on-success log
+vtp version 1
+fhrp version vrrp v3
+line aux 0
 !
 line con 0
  stopbits 1
-line aux 0
-line vty 0 4
+!
+line vty 0 80
  transport input ssh
+!
 line vty 5 80
- transport input ssh
+ transport input none
 !
 ntp server vrf Mgmt-intf 192.168.100.20
+sdwan
+ interface GigabitEthernet2
+  tunnel-interface
+   encapsulation ipsec weight 1
+   no border
+   color mpls restrict
+   no last-resort-circuit
+   no low-bandwidth-link
+   no vbond-as-stun-server
+   vmanage-connection-preference 5
+   port-hop
+   carrier                       default
+   nat-refresh-interval          5
+   hello-interval                1000
+   hello-tolerance               12
+   allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+   no allow-service snmp
+   no allow-service bfd
+  exit
+ exit
+ appqoe
+  no tcpopt enable
+  no dreopt enable
+  no httpopt enable
+ !
+ omp
+  no shutdown
+  graceful-restart
+  no as-dot-notation
+  address-family ipv4
+   advertise connected
+   advertise static
+  !
+  address-family ipv6
+   advertise connected
+   advertise static
+  !
+ !
 !
+sslproxy
+ no enable
+ rsa-key-modulus      2048
+ certificate-lifetime 730
+ eckey-type           P256
+ ca-tp-label          PROXY-SIGNING-CA
+ settings expired-certificate  drop
+ settings untrusted-certificate drop
+ settings unknown-status       drop
+ settings certificate-revocation-check none
+ settings unsupported-protocol-versions drop
+ settings unsupported-cipher-suites drop
+ settings failure-mode         close
+ settings minimum-tls-ver      TLSv1
+ dual-side optimization enable
 !
-!
-!
-!
-!
-telemetry receiver protocol confd-rfc5277
- host ip-address 0.0.0.0 0
- protocol rfc5277
-netconf-yang
-netconf-yang feature candidate-datastore
-end
