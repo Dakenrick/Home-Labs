@@ -1,9 +1,8 @@
 Building configuration...
 
-Current configuration : 6192 bytes
+Current configuration : 6101 bytes
 !
-! Last configuration change at 03:52:28 UTC Fri Apr 5 2024 by cisco
-! NVRAM config last updated at 03:52:29 UTC Fri Apr 5 2024 by cisco
+! No configuration change since last restart
 !
 version 15.9
 service timestamps debug datetime msec

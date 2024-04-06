@@ -6,6 +6,7 @@ import datetime
 
 CCNP_CRTL = ['192.168.100.24', '192.168.100.25', '192.168.100.26', '192.168.100.39', '192.168.100.40', '192.168.100.41']
 CCNP_SDWAN = ['192.168.100.20', '192.168.100.27', '192.168.100.36', '192.168.100.37', '192.168.100.38', '192.168.100.42']
+CCNP_EDGES = ['192.168.100.28', '192.168.100.30', '192.168.100.33']
 
 TYPE_XR = 'cisco_xr'
 TYPE_XE = 'cisco_xe'
@@ -44,4 +45,5 @@ def BACKUP(TYPE, IP_LIST, USERNAME, PASSWORD):
         print('\n Finished backing up config \n')
 
 BACKUP(TYPE_XE, CCNP_SDWAN, 'cisco', 'Cisco123')
-BACKUP(TYPE_XE, CCNP_CRTL, 'admin', 'Cisco123')
+BACKUP(TYPE_XE, CCNP_EDGES, 'admin', 'Cisco12345')
+#BACKUP(TYPE_XE, CCNP_CRTL, 'admin', 'Cisco123')

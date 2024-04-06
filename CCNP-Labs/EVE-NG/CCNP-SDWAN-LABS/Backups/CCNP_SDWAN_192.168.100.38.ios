@@ -1,10 +1,10 @@
 Building configuration...
 
   
-Current configuration : 4635 bytes
+Current configuration : 4662 bytes
 !
-! Last configuration change at 09:48:59 EDT Thu Apr 4 2024 by cisco
-! NVRAM config last updated at 09:49:04 EDT Thu Apr 4 2024 by cisco
+! Last configuration change at 19:06:19 EDT Sat Apr 6 2024 by cisco
+! NVRAM config last updated at 19:06:12 EDT Sat Apr 6 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -203,6 +203,6 @@ line vty 0 4
  transport input ssh
 !
 no scheduler allocate
-ntp master 1
+ntp server vrf Mgmt-intf 192.168.100.20
 !
 end

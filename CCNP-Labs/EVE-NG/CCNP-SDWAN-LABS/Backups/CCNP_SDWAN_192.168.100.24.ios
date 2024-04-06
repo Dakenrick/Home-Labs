@@ -45,7 +45,7 @@ system
    no enable
    stratum 5
   exit
-  server 192.168.100.38
+  server 192.168.100.20
    source-interface eth0
    vpn              512
    version          4

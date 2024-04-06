@@ -1,9 +1,10 @@
 Building configuration...
 
   
-Current configuration : 4319 bytes
+Current configuration : 4788 bytes
 !
-! Last configuration change at 21:42:20 UTC Thu Apr 4 2024 by cisco
+! Last configuration change at 19:05:29 UTC Sat Apr 6 2024 by cisco
+! NVRAM config last updated at 19:05:29 UTC Sat Apr 6 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -85,25 +86,37 @@ interface GigabitEthernet0/0
  mpls ip
 !
 interface GigabitEthernet0/1
- description EAST-U00-OR-01-GI2.450
- ip address 172.16.10.1 255.255.255.252
+ description EAST-U00-OR-01-GI2
+ no ip address
  duplex auto
  speed auto
- media-type rj45
+!
+interface GigabitEthernet0/1.450
+ description EAST-U00-OR-01-GI2.450
+ encapsulation dot1Q 450
+ ip address 172.16.10.1 255.255.255.252
 !
 interface GigabitEthernet0/2
- description EAST-U00-OR-02-GI2.450
- ip address 172.16.10.5 255.255.255.252
+ description EAST-U00-OR-02-GI2
+ no ip address
  duplex auto
  speed auto
- media-type rj45
+!
+interface GigabitEthernet0/2.450
+ description EAST-U00-OR-02-GI2.450
+ encapsulation dot1Q 450
+ ip address 172.16.10.5 255.255.255.252
 !
 interface GigabitEthernet0/3
- description WEST-U00-OR-01-GI2.450
- ip address 172.16.20.1 255.255.255.252
+ description WEST-U00-OR-01-GI2
+ no ip address
  duplex auto
  speed auto
- media-type rj45
+!
+interface GigabitEthernet0/3.450
+ description WEST-U00-OR-01-GI2.450
+ encapsulation dot1Q 450
+ ip address 172.16.20.1 255.255.255.252
 !
 interface GigabitEthernet0/4
  description WEST-U00-OR-02-GI2.450
@@ -113,11 +126,15 @@ interface GigabitEthernet0/4
  media-type rj45
 !
 interface GigabitEthernet0/5
+ description HQ-HUB-01-GI2
  no ip address
- shutdown
  duplex auto
  speed auto
- media-type rj45
+!
+interface GigabitEthernet0/5.450
+ description HQ-HUB-01-GI2.450
+ encapsulation dot1Q 450
+ ip address 172.16.30.5 255.255.255.252
 !
 interface GigabitEthernet0/6
  no ip address
@@ -191,6 +208,6 @@ line vty 0 4
  transport input ssh
 !
 no scheduler allocate
-ntp server vrf Mgmt-intf 192.168.100.38
+ntp server vrf Mgmt-intf 192.168.100.20
 !
 end
