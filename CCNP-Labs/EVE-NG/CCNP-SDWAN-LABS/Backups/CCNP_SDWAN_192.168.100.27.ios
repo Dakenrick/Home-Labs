@@ -1,9 +1,8 @@
 Building configuration...
 
-Current configuration : 5557 bytes
+Current configuration : 5481 bytes
 !
-! Last configuration change at 19:05:32 UTC Sat Apr 6 2024 by cisco
-! NVRAM config last updated at 19:05:32 UTC Sat Apr 6 2024 by cisco
+! Last configuration change at 01:02:39 UTC Mon May 27 2024
 !
 version 15.2
 service timestamps debug datetime msec
@@ -88,7 +87,7 @@ interface GigabitEthernet0/3
  no switchport
  no ip address
  negotiation auto
-!
+!         
 interface GigabitEthernet0/3.100
  encapsulation dot1Q 100
  ip address 210.16.30.1 255.255.255.252
@@ -146,9 +145,9 @@ router ospf 10
  network 10.1.1.5 0.0.0.0 area 0
  network 172.16.30.0 0.0.0.3 area 0
 !
-ip nat inside source static 173.16.30.35 interface GigabitEthernet0/3.102
-ip nat inside source static 173.16.30.34 interface GigabitEthernet0/3.101
 ip nat inside source static 173.16.30.10 interface GigabitEthernet0/3.100
+ip nat inside source static 173.16.30.34 interface GigabitEthernet0/3.101
+ip nat inside source static 173.16.30.35 interface GigabitEthernet0/3.102
 ip forward-protocol nd
 !
 ip http server
@@ -207,7 +206,7 @@ IOSv - Cisco Systems Confidential -
 Supplemental End User License Restrictions
 
 This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
-
+          
 By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
 ^C
 !
