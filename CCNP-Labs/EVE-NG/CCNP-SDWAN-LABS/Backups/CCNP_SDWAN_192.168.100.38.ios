@@ -1,9 +1,10 @@
 Building configuration...
 
   
-Current configuration : 4571 bytes
+Current configuration : 4388 bytes
 !
-! No configuration change since last restart
+! Last configuration change at 04:44:07 EDT Mon May 27 2024 by cisco
+! NVRAM config last updated at 05:08:34 EDT Mon May 27 2024 by cisco
 !
 version 15.9
 service timestamps debug datetime msec
@@ -36,13 +37,13 @@ no mmi pvc
 mmi snmp-timeout 180
 !
 !
-!
-!
-!
-!
-!
-!
 !         
+!
+!
+!
+!
+!
+!
 !
 !
 no ip domain lookup
@@ -62,7 +63,7 @@ redundancy
 !
 ! 
 !
-!         
+!
 !
 !
 !
@@ -79,22 +80,10 @@ interface Loopback0
 !
 interface GigabitEthernet0/0
  description EAST-DC-SW01-GI0/3
- no ip address
+ ip address 210.16.30.1 255.255.255.248
  duplex auto
  speed auto
  media-type rj45
-!         
-interface GigabitEthernet0/0.100
- encapsulation dot1Q 100
- ip address 210.16.30.2 255.255.255.252
-!
-interface GigabitEthernet0/0.101
- encapsulation dot1Q 101
- ip address 210.16.30.6 255.255.255.252
-!
-interface GigabitEthernet0/0.102
- encapsulation dot1Q 102
- ip address 210.16.30.14 255.255.255.252
 !
 interface GigabitEthernet0/1
  description CA-Server-GI0/1
