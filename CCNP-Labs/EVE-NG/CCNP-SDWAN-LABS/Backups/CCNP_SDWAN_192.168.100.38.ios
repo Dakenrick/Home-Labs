@@ -1,10 +1,9 @@
 Building configuration...
 
   
-Current configuration : 4662 bytes
+Current configuration : 4571 bytes
 !
-! Last configuration change at 19:06:19 EDT Sat Apr 6 2024 by cisco
-! NVRAM config last updated at 19:06:12 EDT Sat Apr 6 2024 by cisco
+! No configuration change since last restart
 !
 version 15.9
 service timestamps debug datetime msec
@@ -43,7 +42,7 @@ mmi snmp-timeout 180
 !
 !
 !
-!
+!         
 !
 !
 no ip domain lookup
@@ -63,7 +62,7 @@ redundancy
 !
 ! 
 !
-!
+!         
 !
 !
 !
@@ -84,7 +83,7 @@ interface GigabitEthernet0/0
  duplex auto
  speed auto
  media-type rj45
-!
+!         
 interface GigabitEthernet0/0.100
  encapsulation dot1Q 100
  ip address 210.16.30.2 255.255.255.252
