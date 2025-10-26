@@ -1,0 +1,46 @@
+---
+backup_dir: /home/dakenrick/Documents/Home-Labs/CCNP-Labs/EVE-NG/CCNP-SDWAN-LABS/Backups
+device_groups:
+  CCNP_CRTL:
+    type: cisco_xe
+    devices:
+      - 192.168.100.24
+      - 192.168.100.25
+      - 192.168.100.26
+      - 192.168.100.39
+      - 192.168.100.40
+      - 192.168.100.41
+    username: admin
+    password: Cisco123
+    commands:
+      - show running-config
+      - show version
+      - show inventory
+
+  CCNP_SDWAN:
+    type: cisco_xe
+    devices:
+      - 192.168.100.20
+      - 192.168.100.27
+      - 192.168.100.36
+      - 192.168.100.37
+      - 192.168.100.38
+      - 192.168.100.42
+    username: admin
+    password: Cisco123
+    commands:
+      - show sdwan running-config
+      - show sdwan control connections
+      - show system status
+
+  CCNP_EDGES:
+    type: cisco_xe
+    devices:
+      - 192.168.100.28
+      - 192.168.100.30
+      - 192.168.100.33
+    username: admin
+    password: Cisco12345
+    commands:
+      - show sdwan running-config
+      - show sdwan control connections

@@ -1,0 +1,38 @@
+[all:vars]
+ansible_connection=network_cli
+ansible_network_os=ios
+ansible_become=yes
+ansible_become_method=enable
+ansible_python_interpreter=/usr/bin/python3
+
+[control]
+control-1 ansible_host=192.168.100.24 ansible_user=admin ansible_password=Cisco123
+control-2 ansible_host=192.168.100.25 ansible_user=admin ansible_password=Cisco123
+control-3 ansible_host=192.168.100.26 ansible_user=admin ansible_password=Cisco123
+
+[sdwan]
+sdwan-1 ansible_host=192.168.100.20 ansible_user=admin ansible_password=Cisco123
+sdwan-2 ansible_host=192.168.100.27 ansible_user=admin ansible_password=Cisco123
+sdwan-3 ansible_host=192.168.100.36 ansible_user=admin ansible_password=Cisco123
+
+[edges]
+edge-1 ansible_host=192.168.100.28 ansible_user=admin ansible_password=Cisco12345
+edge-2 ansible_host=192.168.100.30 ansible_user=admin ansible_password=Cisco12345
+edge-3 ansible_host=192.168.100.33 ansible_user=admin ansible_password=Cisco12345
+
+[control:vars]
+device_commands:
+  - show running-config
+  - show version
+  - show inventory
+
+[sdwan:vars]
+device_commands:
+  - show sdwan running-config
+  - show sdwan control connections
+  - show system status
+
+[edges:vars]
+device_commands:
+  - show sdwan running-config
+  - show sdwan control connections

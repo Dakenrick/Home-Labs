@@ -1,0 +1,36 @@
+---
+- name: Backup Network Devices
+  hosts: all
+  gather_facts: no
+  
+  vars:
+    backup_dir: "/home/dakenrick/Documents/Home-Labs/CCNP-Labs/EVE-NG/CCNP-SDWAN-LABS/Backups"
+    timestamp: "{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}"
+
+  tasks:
+    - name: Create backup directory
+      file:
+        path: "{{ backup_dir }}/{{ inventory_hostname }}"
+        state: directory
+        mode: '0755'
+      run_once: true
+      delegate_to: localhost
+
+    - name: Backup running config
+      cisco.ios.ios_command:
+        commands: "{{ device_commands | default(['show running-config']) }}"
+      register: config_output
+      ignore_errors: yes
+
+    - name: Save output to file
+      copy:
+        content: "{{ item.stdout | join('\n') }}"
+        dest: "{{ backup_dir }}/{{ inventory_hostname }}/{{ item.stdout_lines[0] | regex_replace(' ', '_') }}_{{ timestamp }}.txt"
+      with_items: "{{ config_output.results }}"
+      delegate_to: localhost
+      when: config_output is success
+
+    - name: Notify on backup failure
+      debug:
+        msg: "Failed to backup {{ inventory_hostname }}"
+      when: config_output is failed
