@@ -4,33 +4,55 @@
   gather_facts: no
   
   vars:
-    backup_dir: "/home/dakenrick/Documents/Home-Labs/CCNP-Labs/EVE-NG/CCNP-SDWAN-LABS/Backups"
-    timestamp: "{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}"
+    base_dir: "/home/dakenrick/Documents/Home-Labs/CCNP-Labs/EVE-NG"
+    lab_types:
+      ccnp_sdwan: "CCNP-SDWAN-LABS"
+      ccnp_fhrp: "CCNP-FHRP-LABS"
+      ccnp_ping_snmp_syslog: "CCNP-PING-SNMP-SYSLOG-LABS"
 
-  tasks:
+  pre_tasks:
+    - name: Determine lab type from group membership
+      set_fact:
+        lab_type: "{{ (group_names | select('match', '^ccnp_') | list | first | default('') ).split('_')[0:2] | join('_') | default('unknown') }}"
+      run_once: true
+
+    - name: Set backup directory based on lab type
+      set_fact:
+        backup_dir: "{{ base_dir }}/{{ lab_types[lab_type] }}/Backups"
+      run_once: true
+
     - name: Create backup directory
       file:
-        path: "{{ backup_dir }}/{{ inventory_hostname }}"
+        path: "{{ backup_dir }}"
         state: directory
         mode: '0755'
       run_once: true
       delegate_to: localhost
 
-    - name: Backup running config
-      cisco.ios.ios_command:
-        commands: "{{ device_commands | default(['show running-config']) }}"
-      register: config_output
-      ignore_errors: yes
+  tasks:
+    - name: Backup device configurations
+      block:
+        - name: Execute show commands
+          cisco.ios.ios_command:
+            commands: "{{ device_commands | default(['show running-config']) }}"
+          register: config_output
+          ignore_errors: yes
 
-    - name: Save output to file
-      copy:
-        content: "{{ item.stdout | join('\n') }}"
-        dest: "{{ backup_dir }}/{{ inventory_hostname }}/{{ item.stdout_lines[0] | regex_replace(' ', '_') }}_{{ timestamp }}.txt"
-      with_items: "{{ config_output.results }}"
-      delegate_to: localhost
-      when: config_output is success
+        - name: Save command outputs to files
+          copy:
+            content: "{{ item.1.stdout | join('\n') }}"
+            dest: "{{ backup_dir }}/{{ lab_type }}_{{ inventory_hostname }}_{{ item.0 | regex_replace(' ', '_') }}.ios"
+          loop: "{{ device_commands | default(['show running-config']) | zip(config_output.results) | list }}"
+          when: config_output is success
+          delegate_to: localhost
 
-    - name: Notify on backup failure
-      debug:
-        msg: "Failed to backup {{ inventory_hostname }}"
-      when: config_output is failed
+        - name: Record successful backup
+          debug:
+            msg: "Successfully backed up {{ inventory_hostname }} - {{ item }}"
+          loop: "{{ device_commands | default(['show running-config']) }}"
+          when: config_output is success
+
+      rescue:
+        - name: Log backup failure
+          debug:
+            msg: "Failed to backup {{ inventory_hostname }} - Error: {{ config_output.msg | default('Unknown error') }}"

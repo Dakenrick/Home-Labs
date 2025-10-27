@@ -1,38 +1,32 @@
 [all:vars]
-ansible_connection=network_cli
 ansible_network_os=ios
+ansible_connection=network_cli
 ansible_become=yes
 ansible_become_method=enable
-ansible_python_interpreter=/usr/bin/python3
 
-[control]
-control-1 ansible_host=192.168.100.24 ansible_user=admin ansible_password=Cisco123
-control-2 ansible_host=192.168.100.25 ansible_user=admin ansible_password=Cisco123
-control-3 ansible_host=192.168.100.26 ansible_user=admin ansible_password=Cisco123
+# SD-WAN Control Plane Components
+[ccnp_sdwan_vbond]
+vbond-1 ansible_host=192.168.100.24 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan control local-properties","show sdwan control summary"]'
+vbond-2 ansible_host=192.168.100.39 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan control local-properties","show sdwan control summary"]'
 
-[sdwan]
-sdwan-1 ansible_host=192.168.100.20 ansible_user=admin ansible_password=Cisco123
-sdwan-2 ansible_host=192.168.100.27 ansible_user=admin ansible_password=Cisco123
-sdwan-3 ansible_host=192.168.100.36 ansible_user=admin ansible_password=Cisco123
+[ccnp_sdwan_vsmart]
+vsmart-1 ansible_host=192.168.100.25 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan policy lists","show sdwan control summary"]'
+vsmart-2 ansible_host=192.168.100.40 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan policy lists","show sdwan control summary"]'
 
-[edges]
-edge-1 ansible_host=192.168.100.28 ansible_user=admin ansible_password=Cisco12345
-edge-2 ansible_host=192.168.100.30 ansible_user=admin ansible_password=Cisco12345
-edge-3 ansible_host=192.168.100.33 ansible_user=admin ansible_password=Cisco12345
+[ccnp_sdwan_vmanage]
+vmanage-1 ansible_host=192.168.100.26 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan orchestrator summary","show system status"]'
+vmanage-2 ansible_host=192.168.100.41 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan orchestrator summary","show system status"]'
 
-[control:vars]
-device_commands:
-  - show running-config
-  - show version
-  - show inventory
+[ccnp_sdwan_edges]
+edge-1 ansible_host=192.168.100.28 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan bfd sessions","show sdwan omp peers","show ip route vrf 1"]'
+edge-2 ansible_host=192.168.100.30 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan bfd sessions","show sdwan omp peers","show ip route vrf 1"]'
+edge-3 ansible_host=192.168.100.33 ansible_user=admin ansible_password=Cisco12345 device_commands='["show sdwan running-config","show sdwan control connections","show sdwan bfd sessions","show sdwan omp peers","show ip route vrf 1"]'
 
-[sdwan:vars]
-device_commands:
-  - show sdwan running-config
-  - show sdwan control connections
-  - show system status
+[ccnp_sdwan_control:children]
+ccnp_sdwan_vbond
+ccnp_sdwan_vsmart
+ccnp_sdwan_vmanage
 
-[edges:vars]
-device_commands:
-  - show sdwan running-config
-  - show sdwan control connections
+[ccnp_sdwan:children]
+ccnp_sdwan_control
+ccnp_sdwan_edges

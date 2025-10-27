@@ -78,13 +78,13 @@ class NetworkBackup:
                         'type': 'cisco_xe',
                         'devices': ['192.168.100.24', '192.168.100.25', '192.168.100.26'],
                         'username': 'admin',
-                        'password': 'Cisco123'
+                        'password': 'Cisco12345'
                     },
                     'CCNP_SDWAN': {
                         'type': 'cisco_xe',
                         'devices': ['192.168.100.20', '192.168.100.27'],
                         'username': 'admin',
-                        'password': 'Cisco123'
+                        'password': 'Cisco12345'
                     }
                 }
             }

@@ -5,10 +5,10 @@ system
  controller-group-id   1
  admin-tech-on-failure
  no vrrp-advt-with-phymac
- sp-organization-name  DSA
- organization-name     DSA
+ sp-organization-name  dsahomelab
+ organization-name     dsahomelab
  upgrade-confirm       15
- vbond vb.dsa.local
+ vbond vb.dsahomelab.com 12346
  aaa
   auth-order      local radius tacacs
   usergroup basic

@@ -4,9 +4,9 @@ system
  site-id               1110001
  admin-tech-on-failure
  no vrrp-advt-with-phymac
- sp-organization-name  DSA
- organization-name     DSA
- vbond vb.dsa.local
+ sp-organization-name  dsahomelab
+ organization-name     dsahomelab
+ vbond vb.dsahomelab.com
  aaa
   auth-order      local radius tacacs
   usergroup basic

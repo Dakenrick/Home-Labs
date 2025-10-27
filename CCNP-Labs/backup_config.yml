@@ -11,7 +11,7 @@ device_groups:
       - 192.168.100.40
       - 192.168.100.41
     username: admin
-    password: Cisco123
+    password: Cisco12345
     commands:
       - show running-config
       - show version
@@ -27,7 +27,7 @@ device_groups:
       - 192.168.100.38
       - 192.168.100.42
     username: admin
-    password: Cisco123
+    password: Cisco12345
     commands:
       - show sdwan running-config
       - show sdwan control connections

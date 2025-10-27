@@ -5,7 +5,8 @@ system
  admin-tech-on-failure
  no route-consistency-check
  no vrrp-advt-with-phymac
- organization-name       DSA
+ sp-organization-name  dsahomelab
+ organization-name     dsahomelab
  upgrade-confirm         15
  vbond 173.16.30.18 local
  aaa
@@ -65,7 +66,7 @@ security
 !
 vpn 0
  dns 10.1.1.1 primary
- host vb.dsa.local ip 210.16.30.17
+ host vb.dsahomelab.com ip 210.16.30.17
  interface ge0/0
   description Tranport-Uplink-VPN-0
   ip address 173.16.30.18/29
